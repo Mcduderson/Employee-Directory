@@ -1,48 +1,54 @@
 import React, { Component } from "react";
-import Header from "./header";
-import SearchBar from "./searchbar";
-import Table from "./table";
-import API from "../utils/API";
+import ListHeader from "./listHeader"
+
 
 class DirectoryContainer extends Component {
     state = {
-        result: [{}],
-        filterResults: [{}],
+        search: "",
+        filterResults: [],
         order: "descend"
     };
 
-    // When this component mounts, search for the movie "The Matrix"
     componentDidMount() {
-        this.searchEmployees();
+        if (this.state.filterResults.length < 1) {
+            this.setState({ filterResults: this.props.employees })
+        }
     }
 
-    searchEmployees = () => {
-        API.search()
-            .then(data => console.log(data))
-            .then(res => this.setState({ result: res.data.results }))
-            
-            .catch(err => console.log(err));
-    };
-
     handleInputChange = event => {
-        const value = event.target.value;
-        const name = event.target.name;
         this.setState({
-            [name]: value
+            search: event.target.value
         });
-    };
+        let userTyped = event.target.value;
+        const filteredList = this.props.employees.filter((item) => {
+            let values = item.name.title + item.name.first + item.name.last + item.gender + item.dob.age + item.email + item.cell;
+            return values.indexOf(userTyped) !== -1;
+
+        });
+
+        this.setState({
+            filterResults: filteredList
+
+        });
+    }
 
 
     render() {
         return (
-            <>
-            <Header />
-            <SearchBar
-                value={this.state.search}
-                handleInputChange={this.handleInputChange}
-            />
-            <Table />
-            </>
+            <div>
+                <form className="form">
+                    <input
+                        value={this.state.search}
+                        name="searchTerm"
+                        onChange={event => this.handleInputChange(event)}
+                        type="text"
+                        placeholder="Search"
+                    />
+                </form>
+                {this.state.filterResults.length > 0 &&
+                    <ListHeader empList={this.state.filterResults} />
+                }
+            </div>
         );
     }
 }
