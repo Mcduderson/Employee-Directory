@@ -1,7 +1,7 @@
 import React from 'react';
-import DirectoryContainer from "./components/directoryContainer";
+import DirectoryContainer from "./components/directoryContainer/directoryContainer";
 import API from "./utils/API";
-import Header from "./components/header";
+import Header from "./components/header/header";
 
 class App extends React.Component {
 

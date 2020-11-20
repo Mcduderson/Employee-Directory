@@ -1,6 +1,6 @@
 import React from "react";
-
-import Card from './card';
+import "./style.css";
+import Card from '../card/card';
 
 class ListHeader extends React.Component {
 

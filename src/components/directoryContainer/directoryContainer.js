@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import ListHeader from "./listHeader"
+import "./style.css";
+import ListHeader from "../listHeader/listHeader"
 
 
 class DirectoryContainer extends Component {
@@ -42,7 +43,7 @@ class DirectoryContainer extends Component {
                         name="searchTerm"
                         onChange={event => this.handleInputChange(event)}
                         type="text"
-                        placeholder="Search"
+                        placeholder="Search by name"
                     />
                 </form>
                 {this.state.filterResults.length > 0 &&
